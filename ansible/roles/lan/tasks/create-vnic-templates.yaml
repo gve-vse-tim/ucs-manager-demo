@@ -1,0 +1,7 @@
+---
+# file: create-vnic-templates.yaml
+
+- include_tasks: assign-vnic-vlans.yaml
+  loop: "{{ demo_vnics }}"
+  loop_control:
+    loop_var: outer_item

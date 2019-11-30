@@ -1,0 +1,15 @@
+---
+# file: create-vsans.yaml
+
+- name: Create VMM VSANs (A/B)
+  ucs_vsans:
+    name: "{{ item.name }}"
+    vsan_id: "{{ item.vsan_id }}"
+    vlan_id: "{{ item.vlan_id }}"
+    fabric: "{{ item.fabric }}"
+    fc_zoning: "{{ item.fc_zoning }}"
+    state: "{{ item.state }}"
+    hostname: "{{ this_ucs_hostname }}"
+    username: "{{ this_ucs_username }}"
+    password: "{{ this_ucs_password }}"
+  loop: "{{ demo_vsans }}"

@@ -1,0 +1,6 @@
+---
+# file: 05-vmware.yaml
+
+- hosts: ucspe
+  roles:
+    - role: vmware

@@ -1,0 +1,6 @@
+---
+# file: 02-lan.yaml
+
+- hosts: ucspe
+  roles:
+    - role: lan

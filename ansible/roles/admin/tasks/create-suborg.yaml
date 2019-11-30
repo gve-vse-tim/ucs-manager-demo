@@ -1,0 +1,13 @@
+---
+# file: create-suborg.yaml
+
+- name: Create Demo Sub Organization
+  ucs_org:
+    org_name: "{{ this_ucs_org_name }}"
+    parent_org_path: "{{ this_ucs_org_root }}"
+    description: UCS Manager Demo Organization
+    state: present
+    hostname: "{{ this_ucs_hostname }}"
+    username: "{{ this_ucs_username }}"
+    password: "{{ this_ucs_password }}"
+    

@@ -1,0 +1,11 @@
+ansible==2.9.0
+certifi==2019.9.11
+cffi==1.13.2
+cryptography==2.8
+Jinja2==2.10.3
+MarkupSafe==1.1.1
+pycparser==2.19
+pyparsing==2.4.5
+PyYAML==5.1.2
+six==1.13.0
+ucsmsdk==0.9.8

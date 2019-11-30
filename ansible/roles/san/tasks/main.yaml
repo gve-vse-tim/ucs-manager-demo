@@ -1,0 +1,12 @@
+---
+# file: main.yaml
+
+# Global UCS Setup
+- include: create-vsans.yaml
+  tags: SAN
+
+# SAN
+- include: create-wwn-pools.yaml
+  tags: SAN
+- include: create-vhba-templates.yaml
+  tags: SAN

@@ -1,0 +1,17 @@
+---
+# file: create-lan-conn.yaml
+
+- name: Create LAN Connectivity Template
+  ucs_lan_connectivity:
+    name: "{{ lan_conn_policy.name }}"
+    description: "{{ lan_conn_policy.description }}"
+    vnic_list:
+      - name: "{{ item.name }}"
+        vnic_template: "{{ item.template }}"
+        adapter_policy: "{{ item.policy }}"
+        order: "{{ item.order }}"
+    org_dn: "{{ this_ucs_org }}"
+    hostname: "{{ this_ucs_hostname }}"
+    username: "{{ this_ucs_username }}"
+    password: "{{ this_ucs_password }}"
+  loop: "{{ demo_lan_conn }}"

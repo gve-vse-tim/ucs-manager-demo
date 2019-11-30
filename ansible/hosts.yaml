@@ -1,0 +1,20 @@
+all:
+  vars:
+    ansible_python_interpreter: /usr/bin/env python3
+    gather_facts: no
+  children:
+    ucspe:
+      vars:
+        ansible_connection: local
+        ansible_user: ucspe
+        ansible_pass: ucspe
+      hosts:
+        ucspe-local:
+          ansible_host: 172.16.245.143
+    sandbox:
+      vars:
+        username: ucspe
+        password: ucspe
+      hosts:
+        ucsm-1:
+          ansible_host: 192.168.2.2

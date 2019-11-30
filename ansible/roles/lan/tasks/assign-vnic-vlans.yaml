@@ -1,0 +1,22 @@
+---
+# file: assign-vnic-vlans.yaml
+
+- name: Create vNIC Template "{{ outer_item.name }}"
+  ucs_vnic_template:
+    name: "{{ outer_item.name }}"
+    description: "{{ outer_item.description }}"
+    fabric: "{{ outer_item.fabric }}"
+    target: adapter
+    redundancy_type: none
+    template_type: "{{ outer_item.template_type }}"
+    mac_pool: "{{ outer_item.mac_pool }}"
+    mtu: "{{ outer_item.mtu }}"
+    vlans_list:
+      - name: "{{ item.vlan_name }}"
+        native: "{{ item.native }}"
+        state: "{{ item.state }}"
+    org_dn: "{{ this_ucs_org }}"
+    hostname: "{{ this_ucs_hostname }}"
+    username: "{{ this_ucs_username }}"
+    password: "{{ this_ucs_password }}"
+  loop: "{{ outer_item.vlans }}"

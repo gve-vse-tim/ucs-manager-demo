@@ -1,0 +1,45 @@
+---
+# file: create-san-conn.yaml
+
+- name: Create SAN Connectivity Policies
+  ucs_san_connectivity:
+    name: "{{ san_conn_policy.name }}"
+    descr: "{{ san_conn_policy.descr }}"
+    wwnn_pool: "{{ san_conn_policy.wwnn_pool }}"
+    vhba_list:
+      - name: "bootA"
+        order: "1"
+        vhba_template: "vhba-boot-A"
+        adapter_policy: "VMWare"
+      - name: "bootB"
+        order: "2"
+        vhba_template: "vhba-boot-B"
+        adapter_policy: "VMWare"
+      - name: "dataA"
+        order: "3"
+        vhba_template: "vhba-data-A"
+        adapter_policy: "VMWare"
+      - name: "dataB"
+        order: "4"
+        vhba_template: "vhba-data-B"
+        adapter_policy: "VMWare"
+    org_dn: "{{ this_ucs_org }}"
+    hostname: "{{ this_ucs_hostname }}"
+    username: "{{ this_ucs_username }}"
+    password: "{{ this_ucs_password }}"
+
+# - name: Create SAN Connectivity Policies with Loops
+#   ucs_san_connectivity:
+#     name: "{{ san_conn_policy.name }}"
+#     descr: "{{ san_conn_policy.descr }}"
+#     wwnn_pool: "{{ san_conn_policy.wwnn_pool }}"
+#     vhba_list:
+#       - name: "{{ item.name }}"
+#         vhba_template: "{{ item.template }}"
+#         adapter_policy: "{{ item.policy }}"
+# #        order: "{{ item.order }}"
+#     org_dn: "{{ this_ucs_org }}"
+#     hostname: "{{ this_ucs_hostname }}"
+#     username: "{{ this_ucs_username }}"
+#     password: "{{ this_ucs_password }}"
+#   loop: "{{ demo_san_conn }}"

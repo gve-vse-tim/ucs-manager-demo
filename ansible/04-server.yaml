@@ -1,0 +1,6 @@
+---
+# file: 04-server.yaml
+
+- hosts: ucspe
+  roles:
+    - role: server

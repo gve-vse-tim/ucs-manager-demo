@@ -1,0 +1,12 @@
+---
+# file: main.yaml
+
+# Global UCS Setup
+- include: create-vlans.yaml
+  tags: LAN
+
+# Network
+- include: create-mac-pools.yaml
+  tags: LAN
+- include: create-vnic-templates.yaml
+  tags: LAN

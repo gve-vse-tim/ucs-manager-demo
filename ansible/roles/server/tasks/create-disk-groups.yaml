@@ -1,0 +1,89 @@
+---
+# file: create-disk-groups.yaml
+
+- name: Create RAID1 Disk Group Policy
+  ucs_disk_group_policy:
+    name: "demoRAID1policy"
+    raid_level: "mirror"
+    num_drives: "2"
+    state: present
+    org_dn: "{{ this_ucs_org }}"
+    hostname: "{{ this_ucs_hostname }}"
+    username: "{{ this_ucs_username }}"
+    password: "{{ this_ucs_password }}"
+
+- name: Create RAID1 Storage Profile
+  ucs_storage_profile:
+    name: "demoBootRAID1"
+    local_luns:
+      - name: "bootLUN"
+        size: "100"
+        expand_to_avail: "yes"
+        disk_policy_name: "demoRAID1policy"
+        state: present
+    state: present
+    org_dn: "{{ this_ucs_org }}"
+    hostname: "{{ this_ucs_hostname }}"
+    username: "{{ this_ucs_username }}"
+    password: "{{ this_ucs_password }}"
+
+- name: Create RAID10 Disk Group Policy
+  ucs_disk_group_policy:
+    name: "demoRAID10policy"
+    raid_level: "mirror-stripe"
+    num_drives: "4"
+    state: present
+    org_dn: "{{ this_ucs_org }}"
+    hostname: "{{ this_ucs_hostname }}"
+    username: "{{ this_ucs_username }}"
+    password: "{{ this_ucs_password }}"
+
+- name: Create RAID10 Storage Profile
+  ucs_storage_profile:
+    name: "demoDataRAID10"
+    local_luns:
+      - name: "dataLUN"
+        size: "100"
+        expand_to_avail: "yes"
+        disk_policy_name: "demoRAID10policy"
+        state: present
+    state: present
+    org_dn: "{{ this_ucs_org }}"
+    hostname: "{{ this_ucs_hostname }}"
+    username: "{{ this_ucs_username }}"
+    password: "{{ this_ucs_password }}"
+
+- name: Create M.2 RAID1 Storage Profile
+  ucs_disk_group_policy:
+    name: "demoM2policy"
+    configuration_mode: manual
+    manual_disks:
+      - slot_num: "1"
+        role: "normal"
+        state: present
+      - slot_num: "254"
+        role: "normal"
+        state: present
+    virtual_drive:
+      access_policy: platform-default
+      strip_size: 64KB
+    state: present
+    org_dn: "{{ this_ucs_org }}"
+    hostname: "{{ this_ucs_hostname }}"
+    username: "{{ this_ucs_username }}"
+    password: "{{ this_ucs_password }}"
+
+- name: Create M.2 Boot Drive
+  ucs_storage_profile:
+    name: "demoM2BootRAID1"
+    local_luns:
+      - name: "bootLUN"
+        size: "100"
+        expand_to_avail: "yes"
+        disk_policy_name: "demoM2policy"
+        state: present
+    state: present
+    org_dn: "{{ this_ucs_org }}"
+    hostname: "{{ this_ucs_hostname }}"
+    username: "{{ this_ucs_username }}"
+    password: "{{ this_ucs_password }}"

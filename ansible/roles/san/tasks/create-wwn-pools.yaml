@@ -1,0 +1,16 @@
+---
+# file: create-wwn-pools.yaml
+
+- name: Create WWN Pools
+  ucs_wwn_pool:
+    name: "{{ item.name }}"
+    order: "sequential"
+    purpose: "{{ item.purpose }}"
+    first_addr: "{{ item.first }}"
+    last_addr: "{{ item.last }}"
+    state: "{{ item.state }}"
+    org_dn: "{{ this_ucs_org }}"
+    hostname: "{{ this_ucs_hostname }}"
+    username: "{{ this_ucs_username }}"
+    password: "{{ this_ucs_password }}"
+  loop: "{{ demo_wwn_pools }}"

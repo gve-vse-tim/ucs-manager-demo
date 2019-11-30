@@ -1,0 +1,14 @@
+---
+# file: create-mac-pools.yaml
+
+- name: Create MAC Pools
+  ucs_mac_pool:
+    name: "{{ item.name }}"
+    order: "sequential"
+    first_addr: "{{ item.first }}"
+    last_addr: "{{ item.last }}"
+    org_dn: "{{ this_ucs_org }}"
+    hostname: "{{ this_ucs_hostname }}"
+    username: "{{ this_ucs_username }}"
+    password: "{{ this_ucs_password }}"
+  loop: "{{ demo_mac_pools }}"

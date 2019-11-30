@@ -1,0 +1,14 @@
+---
+# file: main.yaml
+
+# Setup DNS
+- include: configure-dns.yaml
+  tags: ADMIN
+
+# Setup NTP
+- include: configure-ntp.yaml
+  tags: ADMIN
+
+# Organization Setup
+- include: create-suborg.yaml
+  tags: ADMIN

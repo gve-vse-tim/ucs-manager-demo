@@ -1,0 +1,18 @@
+---
+# file: create-vhba-templates.yaml
+
+- name: Create vHBA Templates
+  ucs_vhba_template:
+    name: "{{ item.name }}"
+    descr: "{{ item.description }}"
+    fabric: "{{ item.fabric }}"
+    vsan: "{{ item.vsan }}"
+    wwpn_pool: "{{ item.wwpn_pool }}"
+    max_data: "{{ item.max_data }}"
+    redundancy_type: none
+    template_type: "{{ item.template_type }}"
+    org_dn: "{{ this_ucs_org }}"
+    hostname: "{{ this_ucs_hostname }}"
+    username: "{{ this_ucs_username }}"
+    password: "{{ this_ucs_password }}"
+  loop: "{{ demo_vhbas }}"

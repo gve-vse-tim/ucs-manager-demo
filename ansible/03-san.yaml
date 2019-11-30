@@ -1,0 +1,6 @@
+---
+# file: 03-san.yaml
+
+- hosts: ucspe
+  roles:
+    - role: san

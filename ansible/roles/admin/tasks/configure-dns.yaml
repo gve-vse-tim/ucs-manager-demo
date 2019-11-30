@@ -1,0 +1,20 @@
+---
+# file: configure-dns.yaml
+
+- name: Configure Domain Network Service (DNS) 1
+  ucs_dns_server:
+    dns_server: 208.67.222.222
+    description: OpenDNS Server 1
+    state: present
+    hostname: "{{ this_ucs_hostname }}"
+    username: "{{ this_ucs_username }}"
+    password: "{{ this_ucs_password }}"
+
+- name: Configure Domain Network Service (DNS) 2
+  ucs_dns_server:
+    dns_server: 208.67.220.220
+    description: OpenDNS Server 2
+    state: present
+    hostname: "{{ this_ucs_hostname }}"
+    username: "{{ this_ucs_username }}"
+    password: "{{ this_ucs_password }}"

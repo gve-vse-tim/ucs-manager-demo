@@ -1,0 +1,6 @@
+---
+# file: 01-admin.yaml
+
+- hosts: ucspe
+  roles:
+    - role: admin

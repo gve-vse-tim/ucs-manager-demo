@@ -1,0 +1,18 @@
+---
+# file: main.yaml
+
+# Network
+# - include: create-lan-conn.yaml
+#   tags: VMWARE
+
+# SAN
+# - include: create-san-conn.yaml
+#   tags: VMWARE
+
+# BIOS Policy
+- include: create-bios-policy.yaml
+  tags: BIOS
+
+# Service Profile Template
+
+# Service Profile

@@ -1,0 +1,247 @@
+---
+# file: ucspe-local.yaml
+
+# Needs to match the hosts.yaml file
+this_ucs_hostname: "{{ ansible_host }}"
+this_ucs_username: "{{ ansible_user }}"
+this_ucs_password: "{{ ansible_pass }}"
+this_ucs_org_root: root
+this_ucs_org_name: demo
+this_ucs_org: org-root/org-demo
+
+demo_uuid_pools:
+  - name: "demoUUID1"
+    prefix: "31415926-5359-9793"
+    first: "0000-000000000001"
+    last: "0000-000000000100"
+    state: present
+
+demo_ip_pools:
+  - name: "demoMgmt1"
+    first: "192.168.254.1"
+    last: "192.168.254.253"
+    gateway: "192.168.254.254"
+    netmask: "255.255.255.0"
+    dns1: "208.67.222.222"
+    dns2: "208.67.220.220"
+    state: present
+
+demo_vlans:
+  - name: VMM-manage
+    id: 101
+    fabric: common
+    description: VMM Management Network
+  - name: VMM-migrate
+    id: 102
+    fabric: common
+    description: VMM Live Migration Network
+  - name: VMM-storage
+    id: 103
+    fabric: common
+    description: VMM Storage Network
+  - name: VM-Network-1
+    id: 104
+    fabric: common
+    description: Network 1 for VM traffic
+  - name: VM-Network-2
+    id: 105
+    fabric: common
+    description: Network 2 for VM traffic
+
+demo_mac_pools:
+  - name: "demoMacA"
+    first: "00:25:B5:A0:00:00"
+    last: "00:25:B5:A0:00:FF"
+    state: present
+  - name: "demoMacB"
+    first: "00:25:B5:B0:00:00"
+    last: "00:25:B5:B0:00:FF"
+    state: present
+
+demo_vnics:
+  - name: vnic-manage-A
+    description: vnic-manage-A
+    fabric: "A"
+    mac_pool: "demoMacA"
+    mtu: "1500"
+    template_type: "updating-template"
+    vlans:
+      - vlan_name: "VMM-manage"
+        native: "yes"
+        state: "present"
+  - name: vnic-manage-B
+    description: vnic-manage-B
+    fabric: "B"
+    mac_pool: "demoMacB"
+    mtu: "1500"
+    template_type: "updating-template"
+    vlans:
+      - vlan_name: "VMM-manage"
+        native: "yes"
+        state: "present"
+  - name: vnic-migrate-A
+    description: vnic-migrate-A
+    fabric: "A"
+    mac_pool: "demoMacA"
+    mtu: "1500"
+    template_type: "updating-template"
+    vlans:
+      - vlan_name: "VMM-migrate"
+        native: "yes"
+        state: "present"
+  - name: vnic-migrate-B
+    description: vnic-migrate-B
+    fabric: "B"
+    mac_pool: "demoMacB"
+    mtu: "1500"
+    template_type: "updating-template"
+    vlans:
+      - vlan_name: "VMM-migrate"
+        native: "yes"
+        state: "present"
+  - name: vnic-storage-A
+    description: vnic-storage-A
+    fabric: "A"
+    mac_pool: "demoMacA"
+    mtu: "1500"
+    template_type: "updating-template"
+    vlans:
+      - vlan_name: "VMM-storage"
+        native: "yes"
+        state: "present"
+  - name: vnic-storage-B
+    description: vnic-storage-B
+    fabric: "B"
+    mac_pool: "demoMacB"
+    mtu: "1500"
+    template_type: "updating-template"
+    vlans:
+      - vlan_name: "VMM-storage"
+        native: "yes"
+        state: "present"
+  - name: vnic-data-A
+    description: vnic-data-A
+    fabric: "A"
+    mac_pool: "demoMacA"
+    mtu: "1500"
+    template_type: "updating-template"
+    vlans:
+      - vlan_name: "VM-network-1"
+        native: "no"
+        state: "present"
+      - vlan_name: "VM-network-2"
+        native: "no"
+        state: "present"
+  - name: vnic-data-B
+    description: vnic-data-B
+    fabric: "B"
+    mac_pool: "demoMacB"
+    mtu: "1500"
+    template_type: "updating-template"
+    vlans:
+      - vlan_name: "VM-network-1"
+        native: "no"
+        state: "present"
+      - vlan_name: "VM-network-2"
+        native: "no"
+        state: "present"
+
+lan_conn_policy:
+  name: "Demo-VMware-LAN"
+  description: "Best Practice Adapter Set for VMWare"
+
+demo_lan_conn:
+  - { order: 1, name: "manageA", template: "vnic-manage-A", policy: "VMWare"}
+  - { order: 2, name: "manageB", template: "vnic-manage-B", policy: "VMWare"}
+  - { order: 3, name: "migrateA", template: "vnic-migrate-A", policy: "VMWare"}
+  - { order: 4, name: "migrateB", template: "vnic-migrate-B", policy: "VMWare"}
+  - { order: 5, name: "storageA", template: "vnic-storage-A", policy: "VMWare"}
+  - { order: 6, name: "storageB", template: "vnic-storage-B", policy: "VMWare"}
+  - { order: 7, name: "dataA", template: "vnic-data-A", policy: "VMWare"}
+  - { order: 8, name: "dataB", template: "vnic-data-B", policy: "VMWare"}
+
+demo_vsans:
+  - name: demoVSAN-A
+    vlan_id: 3101
+    vsan_id: 101
+    fabric: A
+    fc_zoning: disabled
+    state: present
+  - name: demoVSAN-B
+    vlan_id: 3201
+    vsan_id: 201
+    fabric: B
+    fc_zoning: disabled
+    state: present
+
+demo_wwn_pools:
+  - name: "demoWWNN"
+    purpose: "node"
+    first: "20:00:00:25:B5:C0:00:01"
+    last: "20:00:00:25:B5:C0:00:FF"
+    state: present
+  - name: "demoBootWWPN-A"
+    purpose: "port"
+    first: "20:00:00:25:B5:A0:00:01"
+    last: "20:00:00:25:B5:A0:00:FF"
+    state: present
+  - name: "demoBootWWPN-B"
+    purpose: "port"
+    first: "20:00:00:25:B5:B0:00:01"
+    last: "20:00:00:25:B5:B0:00:FF"
+    state: present
+  - name: "demoDataWWPN-A"
+    purpose: "port"
+    first: "20:00:00:25:B5:A1:00:01"
+    last: "20:00:00:25:B5:A1:00:FF"
+    state: present
+  - name: "demoDataWWPN-B"
+    purpose: "port"
+    first: "20:00:00:25:B5:B1:00:01"
+    last: "20:00:00:25:B5:B1:00:FF"
+    state: present
+
+demo_vhbas:
+  - name: vhba-boot-A
+    description: vhba-boot-A
+    fabric: "A"
+    wwpn_pool: "demoBootWWPN-A"
+    vsan: "demoVSAN-A"
+    max_data: 2048
+    template_type: "updating-template"
+    state: present
+  - name: vhba-boot-B
+    description: vhba-boot-B
+    fabric: "B"
+    wwpn_pool: "demoBootWWPN-B"
+    vsan: "demoVSAN-B"
+    max_data: 2048
+    template_type: "updating-template"
+    state: present
+  - name: vhba-data-A
+    description: vhba-data-A
+    fabric: "A"
+    wwpn_pool: "demoDataWWPN-A"
+    vsan: "demoVSAN-A"
+    max_data: 2048
+    template_type: "updating-template"
+    state: present
+  - name: vhba-data-B
+    description: vhba-data-B
+    fabric: "B"
+    wwpn_pool: "demoDataWWPN-B"
+    vsan: "demoVSAN-B"
+    max_data: 2048
+    template_type: "updating-template"
+    state: present
+
+san_conn_policy:
+  name: "Demo-VMware-SAN"
+  descr: "Boot from SAN and Separate Data vHBAs"
+  wwnn_pool: "demoWWNN"
+
+demo_san_conn:
+  - { order: "1", name: "bootA", template: "vhba-boot-A", policy: "VMWare" }
+  - { order: "2", name: "bootB", template: "vhba-boot-B", policy: "VMWare" }
+  - { order: "3", name: "dataA", template: "vhba-data-A", policy: "VMWare" }
+  - { order: "4", name: "dataB", template: "vhba-data-B", policy: "VMWare" }

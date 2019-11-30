@@ -1,0 +1,9 @@
+---
+# file: all.yaml
+
+- import_playbook: 01-admin.yaml
+- import_playbook: 02-lan.yaml
+- import_playbook: 03-san.yaml
+- import_playbook: 04-server.yaml
+- import_playbook: 05-vmware.yaml
+

@@ -1,0 +1,10 @@
+---
+# file: main.yaml
+
+# Server
+- include: create-uuid-pools.yaml
+  tags: SERVER
+- include: create-ip-pools.yaml
+  tags: SERVER
+- include: create-disk-groups.yaml
+  tags: SERVER

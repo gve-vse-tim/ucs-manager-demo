@@ -1,0 +1,37 @@
+---
+# file: create-bios-policy.yaml
+
+# from ucsmsdk.ucscoreutils import get_meta_info
+# class_meta = get_meta_info(class_name)
+# class_properties = class_meta.props.keys()
+# class_children = class_meta.children
+- name: Create VMware 6.5 Bios Policy
+  ucs_managed_objects:
+    objects:
+    - module: ucsmsdk.mometa.bios.BiosVProfile
+      class: BiosVProfile
+      properties:
+        parent_mo_or_dn: "{{ this_ucs_org }}"
+        name: demoVMware65
+        policy_owner: local
+        reboot_on_update: "yes"
+      children:
+      - module: ucsmsdk.mometa.bios.BiosVfQuietBoot
+        class: BiosVfQuietBoot
+        name: Quiet-Boot
+        properties:
+          vp_quiet_boot: disabled
+      - module: ucsmsdk.mometa.bios.BiosVfIntelHyperThreadingTech
+        class: BiosVfIntelHyperThreadingTech
+        properties:
+          vp_intel_hyper_threading_tech: enabled
+      - module: ucsmsdk.mometa.bios.BiosVfExecuteDisableBit
+        class: BiosVfExecuteDisableBit
+        properties:
+          vp_execute_disable_bit: enabled
+    state: present
+    hostname: "{{ this_ucs_hostname }}"
+    username: "{{ this_ucs_username }}"
+    password: "{{ this_ucs_password }}"
+
+  
